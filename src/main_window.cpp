@@ -106,7 +106,7 @@ QStringList MainWindow::search_inside(const QString& str, const QString& start, 
         end_indexs.push_back(pos);
 
     if(start_indexs.size() != end_indexs.size())
-        throw QString(this->tr("置換目印の頭と終端の数が合いません"));
+        throw QString(this->tr("置換目印の先頭と終端の数が合いません"));
 
     auto result = QStringList();
     for(int ind=0; ind<start_indexs.size(); ++ind)
@@ -165,7 +165,7 @@ QStringList MainWindow::search_sign_file(const QString& path)const
     {
         auto file = QFile(i);
         if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-            throw QString(this->tr("ファイルを開けません"));
+            throw QString(this->tr("存在しないファイルが含まれています"));
 
         QTextStream stream(&file);
 
@@ -195,7 +195,7 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
 {
     QDir in_dir(in);
     if(!in_dir.exists())
-        throw QString(this->tr("存在しないディレクトリを指定しています"));
+        throw QString(this->tr("存在しないディレクトリが含まれています"));
 
     auto under_dirs = in_dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
     auto under_dirs_replace = under_dirs;
