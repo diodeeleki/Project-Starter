@@ -19,11 +19,20 @@
 #include <__$project_name$__.hpp>
 
 #include <QApplication>
+#include <QPushButton>
+#include <QObject>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    __$class_name$__ w;
-    w.show();
+    QPushButton bt("show");
+    
+    QObject::connect(&bt, &QPushButton::clicked, []()
+    {
+    	__$class_name$__ dialog;
+    	dialog.exec();
+    });
+    
+    bt.show();
     return a.exec();
 }

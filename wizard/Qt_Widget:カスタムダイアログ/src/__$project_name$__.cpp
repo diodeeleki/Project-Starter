@@ -16,14 +16,35 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 *///------------------------------------------------------------------------
+
 #include <__$project_name$__.hpp>
+#include <ui___$project_name$__.h>
 
-#include <QApplication>
+#include <QDialog>
+#include <QWidget>
 
-int main(int argc, char *argv[])
+__$class_name$__::__$class_name$__(QWidget* parent)
+:	QDialog(parent), 
+	ui_(new Ui::__$ui_name$__)
 {
-    QApplication a(argc, argv);
-    __$class_name$__ w;
-    w.show();
-    return a.exec();
+    this->ui_->setupUi(this);
+    this->connect(this->ui_->buttonBox, &QDialogButtonBox::rejected, this, &__$class_name$__::clocked_rejected);
+    this->connect(this->ui_->buttonBox, &QDialogButtonBox::accepted, this, &__$class_name$__::clocked_accept);
+}
+
+__$class_name$__::~__$class_name$__()
+{
+    delete this->ui_;
+}
+
+// rejectボタンが押されたら実行
+void __$class_name$__::clocked_rejected()
+{
+	this->reject();
+}
+
+// acceptボタンが押されたら実行
+void __$class_name$__::clocked_accept()
+{
+
 }

@@ -16,14 +16,30 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 *///------------------------------------------------------------------------
-#include <__$project_name$__.hpp>
 
-#include <QApplication>
+#pragma once
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    __$class_name$__ w;
-    w.show();
-    return a.exec();
+#include <QDialog>
+#include <QString>
+
+QT_BEGIN_NAMESPACE
+namespace Ui
+{ 
+	class __$ui_name$__; 
 }
+QT_END_NAMESPACE
+
+class __$class_name$__
+: public QDialog
+{
+    Q_OBJECT
+
+	Ui::__$ui_name$__ *ui_;
+public:
+    __$class_name$__(QWidget* = nullptr);
+    ~__$class_name$__();
+    
+private slots:
+	void clocked_rejected();
+	void clocked_accept();
+};

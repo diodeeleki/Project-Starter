@@ -34,11 +34,12 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QDir>
+#include <QApplication>
 
 MainWindow::MainWindow(QWidget *parent)
 :	QMainWindow(parent), 
     ui_(new Ui::MainWindowUiRoot),
-    wizard_path_("../wizard"),
+    wizard_path_(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() +  "wizard"),
     rep_sign_start_("__$"),
     rep_sign_end_("$__")
 {
