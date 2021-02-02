@@ -26,7 +26,6 @@
 #include <QVector>
 #include <QStringList>
 #include <QObject>
-#include <stdexcept>
 #include <QDirIterator>
 #include <QMessageBox>
 #include <QFile>
@@ -65,7 +64,7 @@ void MainWindow::clicked_accept()
     if(!this->ui_->replace_view->is_names_full())
     {
         QMessageBox msg(this);
-        msg.setText(this->tr("置換文字リストが全て埋まっていません。"));
+        msg.setText(this->tr("置き換え文字リストが全て埋まっていません。"));
         msg.setWindowTitle(this->tr("エラー"));
         msg.exec();
         return;
@@ -82,10 +81,10 @@ void MainWindow::clicked_accept()
     try
     {
         this->copy_replace_folder(in_dir_path, out_dir_path, signs, names);
-    }catch(const std::runtime_error err)
+    }catch(const QString err)
     {
         QMessageBox msg(this);
-        msg.setText(this->tr("ファイルの置換とコピーに失敗しました"));
+        msg.setText(err);
         msg.setWindowTitle(this->tr("エラー"));
         msg.exec();
         return;
@@ -107,7 +106,7 @@ QStringList MainWindow::search_inside(const QString& str, const QString& start, 
         end_indexs.push_back(pos);
 
     if(start_indexs.size() != end_indexs.size())
-        throw std::runtime_error("There is a problem with how to write the replacement sign");
+        throw QString(this->tr("置換目印の頭と終端の数が合いません"));
 
     auto result = QStringList();
     for(int ind=0; ind<start_indexs.size(); ++ind)
@@ -136,7 +135,7 @@ QStringList MainWindow::search_sign_name(const QString& dir)const
     {
         for(const auto& i:dirs)
             signs += this->search_inside(i, this->rep_sign_start_, this->rep_sign_end_);
-    } catch(const std::runtime_error err)
+    } catch(const QString err)
     {
         throw err;
     }
@@ -166,7 +165,7 @@ QStringList MainWindow::search_sign_file(const QString& path)const
     {
         auto file = QFile(i);
         if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-            throw std::runtime_error("cant open file");
+            throw QString(this->tr("ファイルを開けません"));
 
         QTextStream stream(&file);
 
@@ -179,7 +178,7 @@ QStringList MainWindow::search_sign_file(const QString& path)const
                 buffer = stream.readLine();
                 signs += search_inside(buffer, this->rep_sign_start_, this->rep_sign_end_);
             }
-        }catch(const std::runtime_error err)
+        }catch(const QString err)
         {
             throw err;
         }
@@ -196,7 +195,7 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
 {
     QDir in_dir(in);
     if(!in_dir.exists())
-        throw std::runtime_error("cant copy and replace filder");
+        throw QString(this->tr("存在しないディレクトリを指定しています"));
 
     auto under_dirs = in_dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
     auto under_dirs_replace = under_dirs;
@@ -264,10 +263,10 @@ void MainWindow::clicked_prj_list(const QString& prj_name)
     {
         rep_sign_list += this->search_sign_name(this->wizard_path_ + QDir::separator() + prj_name);
         rep_sign_list += this->search_sign_file(this->wizard_path_ + QDir::separator() + prj_name);
-    }catch(const std::runtime_error err)
+    }catch(const QString err)
     {
         QMessageBox msg(this);
-        msg.setText(this->tr("置換文字列の目印に問題がある可能性があります"));
+        msg.setText(err);
         msg.setWindowTitle(this->tr("エラー"));
         msg.exec();
         return;
