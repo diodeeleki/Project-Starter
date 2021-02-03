@@ -20,10 +20,15 @@
 #include <main_window.hpp>
 
 #include <QApplication>
+#include <QDir>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+
+    if(!QDir(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() + "init").exists())
+        QDir(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator()).mkdir("init");
+
     MainWindow w;
     w.show();
     return app.exec();
