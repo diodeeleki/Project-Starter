@@ -34,26 +34,35 @@
 #include <QDebug>
 #include <QDir>
 #include <QApplication>
+#include <QSettings>
+#include <QTextCodec>
 
 MainWindow::MainWindow(QWidget *parent)
 :	QMainWindow(parent), 
     ui_(new Ui::MainWindowUiRoot),
-    wizard_path_(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() +  "wizard"),
-    rep_sign_start_("__$"),
-    rep_sign_end_("$__")
+    init_file_path_(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() + "init" + QDir::separator() + "pjs.ini"),
+    default_replace_sign_head_("__$"),
+    default_replace_sign_end_("$__"),
+    default_wizard_path_(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() + "wizard"),
+    setting_(this->init_file_path_, QSettings::IniFormat)
 {
+    this->setting_.setIniCodec(QTextCodec::codecForName("UTF-8"));
+
     this->ui_->setupUi(this);
 
     this->connect(this->ui_->buttonBox, &QDialogButtonBox::accepted, this, &MainWindow::clicked_accept);
     this->connect(this->ui_->buttonBox, &QDialogButtonBox::rejected, this, &MainWindow::close);
     this->connect(this->ui_->project_name_list, &ProNameList::clicked_project_name, this, &MainWindow::clicked_prj_list);
 
-    this->ui_->project_name_list->set_wizard_dir(this->wizard_path_);
+    this->ui_->project_name_list->set_wizard_dir(this->setting_.value("wizard_dir", this->default_wizard_path_).toString());
 }
 
 MainWindow::~MainWindow()
 {
     delete this->ui_;
+    this->setting_.setValue("wizard_dir", this->default_wizard_path_);
+    this->setting_.setValue("replace_sign_head", this->default_replace_sign_head_);
+    this->setting_.setValue("replace_sign_end", this->default_replace_sign_end_);
 }
 
 // acceptボタンが押されたとき呼ばれるスロット
@@ -75,7 +84,7 @@ void MainWindow::clicked_accept()
 
     QDir(this->ui_->out_put_text_box->text()).mkdir(names[0]);
 
-    auto in_dir_path = this->wizard_path_ + QDir::separator() + this->ui_->project_name_list->selected_prj_name();
+    auto in_dir_path = this->setting_.value("wizard_dir", this->default_wizard_path_).toString() + QDir::separator() + this->ui_->project_name_list->selected_prj_name();
     auto out_dir_path = this->ui_->out_put_text_box->text() + QDir::separator() + names[0];
 
     try
@@ -134,7 +143,9 @@ QStringList MainWindow::search_sign_name(const QString& dir)const
     try
     {
         for(const auto& i:dirs)
-            signs += this->search_inside(i, this->rep_sign_start_, this->rep_sign_end_);
+            signs += this->search_inside(i,
+                this->setting_.value("replace_sign_head", this->default_replace_sign_head_).toString(),
+                this->setting_.value("replace_sign_end", this->default_replace_sign_end_).toString());
     } catch(const QString err)
     {
         throw err;
@@ -176,7 +187,9 @@ QStringList MainWindow::search_sign_file(const QString& path)const
             while (!stream.atEnd())
             {
                 buffer = stream.readLine();
-                signs += search_inside(buffer, this->rep_sign_start_, this->rep_sign_end_);
+                signs += search_inside(buffer,
+                    this->setting_.value("replace_sign_head", this->default_replace_sign_head_).toString(),
+                    this->setting_.value("replace_sign_end", this->default_replace_sign_end_).toString());
             }
         }catch(const QString err)
         {
@@ -201,7 +214,11 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
     auto under_dirs_replace = under_dirs;
 
     for(int i=0; i<signs.size(); ++i)
-        under_dirs_replace.replaceInStrings(this->rep_sign_start_ + signs[i] + this->rep_sign_end_, names[i]);
+        under_dirs_replace.replaceInStrings(
+            this->setting_.value("replace_sign_head", this->default_replace_sign_head_).toString() +
+            signs[i] +
+            this->setting_.value("replace_sign_end", this->default_replace_sign_end_).toString(),
+            names[i]);
 
     for(int i=0; i<under_dirs.size(); ++i)
     {
@@ -213,7 +230,11 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
     auto under_files = in_dir.entryList(QDir::Files);
     auto under_files_replaced = under_files;
     for(int i=0; i<signs.size(); ++i)
-        under_files_replaced.replaceInStrings(this->rep_sign_start_ + signs[i] + this->rep_sign_end_, names[i]);
+        under_files_replaced.replaceInStrings(
+            this->setting_.value("replace_sign_head", this->default_replace_sign_head_).toString() +
+            signs[i] +
+            this->setting_.value("replace_sign_end", this->default_replace_sign_end_).toString(),
+            names[i]);
 
     for(int i=0; i<under_files.size(); ++i)
     {
@@ -238,7 +259,11 @@ void MainWindow::replace_file_text(const QString& path, const QStringList& signs
         {
             buffer = stream.readLine();
             for(int i=0; i<signs.size(); ++i)
-                buffer.replace(this->rep_sign_start_ + signs[i] + this->rep_sign_end_, names[i]);
+                buffer.replace(
+                    this->setting_.value("replace_sign_head", this->default_replace_sign_head_).toString() +
+                    signs[i] +
+                    this->setting_.value("replace_sign_end", this->default_replace_sign_end_).toString(),
+                    names[i]);
 
             if(!buffer.contains("DELETE"))
                 out_str.append(buffer + "\n");
@@ -261,8 +286,16 @@ void MainWindow::clicked_prj_list(const QString& prj_name)
 
     try
     {
-        rep_sign_list += this->search_sign_name(this->wizard_path_ + QDir::separator() + prj_name);
-        rep_sign_list += this->search_sign_file(this->wizard_path_ + QDir::separator() + prj_name);
+        rep_sign_list += this->search_sign_name(
+            this->setting_.value("wizard_dir", this->default_wizard_path_).toString() +
+            QDir::separator() +
+            prj_name);
+
+        rep_sign_list += this->search_sign_file(
+            this->setting_.value("wizard_dir", this->default_wizard_path_).toString() +
+            QDir::separator() +
+            prj_name);
+
     }catch(const QString err)
     {
         QMessageBox msg(this);

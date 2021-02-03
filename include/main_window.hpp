@@ -21,6 +21,7 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QSettings>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -35,10 +36,13 @@ class MainWindow
     Q_OBJECT
 
 	Ui::MainWindowUiRoot *ui_;
-    const QString wizard_path_;
 
-    const QString rep_sign_start_;
-    const QString rep_sign_end_;
+    const QString init_file_path_;
+    const QString default_replace_sign_head_;
+    const QString default_replace_sign_end_;
+    const QString default_wizard_path_;
+
+    QSettings setting_;
 
 public:
     MainWindow(QWidget* = nullptr);
