@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->connect(this->ui_->buttonBox, &QDialogButtonBox::accepted, this, &MainWindow::clicked_accept);
     this->connect(this->ui_->buttonBox, &QDialogButtonBox::rejected, this, &MainWindow::close);
     this->connect(this->ui_->project_name_list, &ProNameList::clicked_project_name, this, &MainWindow::clicked_prj_list);
+    this->connect(this->ui_->action_setting, &QAction::triggered, this, &MainWindow::clicked_setting);
 
     this->ui_->project_name_list->set_wizard_dir(this->setting_.value("wizard_dir", this->default_wizard_path_).toString());
 }

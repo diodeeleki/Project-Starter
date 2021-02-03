@@ -19,6 +19,7 @@
 
 #include <main_window.hpp>
 #include <ui_main_window.h>
+#include <setting_dialog.hpp>
 
 #include <QMainWindow>
 #include <QDialogButtonBox>
@@ -69,4 +70,11 @@ void MainWindow::clicked_prj_list(const QString& prj_name)
     rep_sign_list.removeDuplicates();//重複削除
 
     this->ui_->replace_view->add_sign_list(rep_sign_list);
+}
+
+// 設定アクションがクリックされたとき呼び出し
+void MainWindow::clicked_setting()
+{
+    SettingDialog sdl;
+    sdl.exec();
 }

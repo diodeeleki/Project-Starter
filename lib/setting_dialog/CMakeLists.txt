@@ -16,9 +16,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #*///------------------------------------------------------------------------
-
 cmake_minimum_required(VERSION 3.19.1)
-project(main_window CXX)
+project(setting_dialog CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -26,37 +25,29 @@ set(CMAKE_AUTOUIC OFF)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/browse_textbox)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/pro_name_list)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/relpace_view)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/setting_dialog)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/browse_textbox_setting_dialog)
 
 find_package(Qt5 REQUIRED Core)
 find_package(Qt5 REQUIRED Widgets)
 find_package(Qt5 REQUIRED Sql)
 
 # AUTOUICを使わずuiファイルのパスを手動でUICへ指定
-qt5_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/main_window.ui)
+qt5_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/setting_dialog.ui)
 
-add_executable(main_window
-	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/special.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/logic.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/slots.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/main_window.hpp
+add_library(setting_dialog STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/setting_dialog.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/setting_dialog.hpp
     ${UI_HEADERS}
 )
 
-target_include_directories(main_window PUBLIC 
+target_include_directories(setting_dialog PUBLIC 
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-set_property(TARGET main_window PROPERTY CXX_STANDARD 20)
-target_link_libraries(main_window PRIVATE Qt5::Core)
-target_link_libraries(main_window PRIVATE Qt5::Widgets)
-target_link_libraries(main_window PRIVATE Qt5::Sql)
+set_property(TARGET setting_dialog PROPERTY CXX_STANDARD 20)
+target_link_libraries(setting_dialog PRIVATE Qt5::Core)
+target_link_libraries(setting_dialog PRIVATE Qt5::Widgets)
+target_link_libraries(setting_dialog PRIVATE Qt5::Sql)
+target_link_libraries(setting_dialog PRIVATE browse_textbox_setting_dialog)
 
-target_link_libraries(main_window PRIVATE browse_textbox)
-target_link_libraries(main_window PRIVATE pro_name_list)
-target_link_libraries(main_window PRIVATE relpace_view)
-target_link_libraries(main_window PRIVATE setting_dialog)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)

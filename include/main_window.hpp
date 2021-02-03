@@ -70,4 +70,7 @@ private slots:
 
     // プロジェクトリストが押されたとき呼ばれるスロット
     void clicked_prj_list(const QString&);
+
+    // 設定アクションがクリックされたとき呼び出し
+    void clicked_setting();
 };
