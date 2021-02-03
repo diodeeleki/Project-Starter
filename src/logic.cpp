@@ -37,34 +37,6 @@
 #include <QSettings>
 #include <QTextCodec>
 
-MainWindow::MainWindow(QWidget *parent)
-:	QMainWindow(parent), 
-    ui_(new Ui::MainWindowUiRoot),
-    init_file_path_(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() + "init" + QDir::separator() + "pjs.ini"),
-    default_replace_sign_head_("__$"),
-    default_replace_sign_end_("$__"),
-    default_wizard_path_(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() + "wizard"),
-    setting_(this->init_file_path_, QSettings::IniFormat)
-{
-    this->setting_.setIniCodec(QTextCodec::codecForName("UTF-8"));
-
-    this->ui_->setupUi(this);
-
-    this->connect(this->ui_->buttonBox, &QDialogButtonBox::accepted, this, &MainWindow::clicked_accept);
-    this->connect(this->ui_->buttonBox, &QDialogButtonBox::rejected, this, &MainWindow::close);
-    this->connect(this->ui_->project_name_list, &ProNameList::clicked_project_name, this, &MainWindow::clicked_prj_list);
-
-    this->ui_->project_name_list->set_wizard_dir(this->setting_.value("wizard_dir", this->default_wizard_path_).toString());
-}
-
-MainWindow::~MainWindow()
-{
-    delete this->ui_;
-    this->setting_.setValue("wizard_dir", this->default_wizard_path_);
-    this->setting_.setValue("replace_sign_head", this->default_replace_sign_head_);
-    this->setting_.setValue("replace_sign_end", this->default_replace_sign_end_);
-}
-
 // acceptボタンが押されたとき呼ばれるスロット
 void MainWindow::clicked_accept()
 {
@@ -274,38 +246,4 @@ void MainWindow::replace_file_text(const QString& path, const QStringList& signs
     }
 
     file.close();
-}
-
-// プロジェクトリストが押されたとき呼ばれるスロット
-void MainWindow::clicked_prj_list(const QString& prj_name)
-{
-    this->ui_->replace_view->all_clear();
-
-    auto rep_sign_list = QStringList();
-    rep_sign_list += this->tr("project_name");
-
-    try
-    {
-        rep_sign_list += this->search_sign_name(
-            this->setting_.value("wizard_dir", this->default_wizard_path_).toString() +
-            QDir::separator() +
-            prj_name);
-
-        rep_sign_list += this->search_sign_file(
-            this->setting_.value("wizard_dir", this->default_wizard_path_).toString() +
-            QDir::separator() +
-            prj_name);
-
-    }catch(const QString err)
-    {
-        QMessageBox msg(this);
-        msg.setText(err);
-        msg.setWindowTitle(this->tr("エラー"));
-        msg.exec();
-        return;
-    }
-
-    rep_sign_list.removeDuplicates();//重複削除
-
-    this->ui_->replace_view->add_sign_list(rep_sign_list);
 }

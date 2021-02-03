@@ -39,7 +39,9 @@ qt5_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/main_window.ui)
 
 add_executable(main_window
 	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/main_window.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/special.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/logic.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/slots.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/main_window.hpp
     ${UI_HEADERS}
 )
