@@ -66,8 +66,6 @@ void MainWindow::clicked_accept()
     if(will_do_you.exec() == QMessageBox::No)
         return;
 
-    qDebug() << will_do_you.exec();
-
     auto signs = this->ui_->replace_view->get_sign_list();// 置換リストの置換目印リスト
     auto names = this->ui_->replace_view->get_name_list();// 置換リストの置き換え文字リスト
 
@@ -75,6 +73,13 @@ void MainWindow::clicked_accept()
 
     auto in_dir_path = this->setting_.value("wizard_dir", this->default_wizard_path_).toString() + QDir::separator() + this->ui_->project_name_list->selected_prj_name();
     auto out_dir_path = this->ui_->out_put_text_box->text() + QDir::separator() + names[0];
+
+    auto dir_itr = QDirIterator(in_dir_path, QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files, QDirIterator::Subdirectories);
+    while(dir_itr.hasNext())
+    {
+        dir_itr.next();
+        this->ui_->progress->inc_denominator();
+    }
 
     try
     {
@@ -98,6 +103,7 @@ void MainWindow::clicked_accept()
 void MainWindow::clicked_prj_list(const QString& prj_name)
 {
     this->ui_->replace_view->all_clear();
+    this->ui_->progress->clear_all();
 
     auto rep_sign_list = QStringList();
     rep_sign_list += this->tr("project_name");

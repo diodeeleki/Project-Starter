@@ -161,6 +161,8 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
     {
         auto out_path = QString(out + QDir::separator() + under_dirs_replace[i]);
         in_dir.mkpath(out_path);
+        this->ui_->progress->add_line(this->tr("create dir:") + out_path);
+        this->ui_->progress->inc_nominator();
         this->copy_replace_folder(in + QDir::separator() + under_dirs[i], out_path, signs, names);
     }
 
@@ -176,6 +178,8 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
     for(int i=0; i<under_files.size(); ++i)
     {
         QFile::copy(in + QDir::separator() + under_files[i], out + QDir::separator() + under_files_replaced[i]);
+        this->ui_->progress->add_line(this->tr("create file:") + out + QDir::separator() + under_files_replaced[i]);
+        this->ui_->progress->inc_nominator();
         this->replace_file_text(out + QDir::separator() + under_files_replaced[i], signs, names);
     }
 }

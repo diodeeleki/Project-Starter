@@ -36,14 +36,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3"/>
-        </item>
-        <item>
-         <widget class="QProgressBar" name="progressBar">
-          <property name="value">
-           <number>0</number>
-          </property>
-         </widget>
+         <widget class="ProgressBar" name="progress" native="true"/>
         </item>
         <item>
          <widget class="QDialogButtonBox" name="buttonBox">
@@ -98,7 +91,13 @@
   <customwidget>
    <class>RelpaceView</class>
    <extends>QWidget</extends>
-   <header location="global">relpace_view.hpp</header>
+   <header>relpace_view.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ProgressBar</class>
+   <extends>QWidget</extends>
+   <header location="global">progress_bar.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

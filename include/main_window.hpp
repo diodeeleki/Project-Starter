@@ -43,7 +43,6 @@ class MainWindow
     const QString default_wizard_path_;
 
     QSettings setting_;
-
 public:
     MainWindow(QWidget* = nullptr);
     ~MainWindow();
