@@ -141,6 +141,7 @@ void MainWindow::clicked_setting()
     auto result = sdl.exec();
     if(result)
     {
+        qDebug() << "保存";
         this->ui_->project_name_list->set_wizard_dir(this->setting_.value("wizard_dir", this->default_wizard_path_).toString());
         this->ui_->replace_view->all_clear();
     }

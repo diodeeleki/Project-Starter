@@ -61,7 +61,4 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete this->ui_;
-    this->setting_.setValue("wizard_dir", this->default_wizard_path_);
-    this->setting_.setValue("replace_sign_head", this->default_replace_sign_head_);
-    this->setting_.setValue("replace_sign_end", this->default_replace_sign_end_);
 }

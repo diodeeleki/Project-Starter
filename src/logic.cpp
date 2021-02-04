@@ -181,8 +181,8 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
         this->ui_->progress->add_line(this->tr("create file:") + out + QDir::separator() + under_files_replaced[i]);
         this->ui_->progress->inc_nominator();
 
-        if(QFile(in + QDir::separator() + under_files[i]).isTextModeEnabled())
-            this->replace_file_text(out + QDir::separator() + under_files_replaced[i], signs, names);
+        // バイナリの場合この1行を実行させてはいけない
+        this->replace_file_text(out + QDir::separator() + under_files_replaced[i], signs, names);
     }
 }
 
@@ -191,30 +191,32 @@ void MainWindow::replace_file_text(const QString& path, const QStringList& signs
 {
     auto file = QFile(path);
 
-    if(file.open(QIODevice::ReadWrite | QIODevice::Text))
+    if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
-        auto stream = QTextStream(&file);
-        auto buffer = QString();
-
-        auto out_str = QString();
-
-        while(!stream.atEnd())
-        {
-            buffer = stream.readLine();
-            for(int i=0; i<signs.size(); ++i)
-                buffer.replace(
-                    this->setting_.value("replace_sign_head", this->default_replace_sign_head_).toString() +
-                    signs[i] +
-                    this->setting_.value("replace_sign_end", this->default_replace_sign_end_).toString(),
-                    names[i]);
-
-            if(!buffer.contains("DELETE"))
-                out_str.append(buffer + "\n");
-        }
-
-        file.resize(0);
-        stream << out_str;
+        file.close();
+        return;
     }
 
+    auto stream = QTextStream(&file);
+    auto buffer = QString();
+    auto out_str = QString();
+
+    while(!stream.atEnd())
+    {
+        buffer = stream.readLine();
+
+        for(int i=0; i<signs.size(); ++i)
+            buffer.replace(
+                this->setting_.value("replace_sign_head", this->default_replace_sign_head_).toString() +
+                signs[i] +
+                this->setting_.value("replace_sign_end", this->default_replace_sign_end_).toString(),
+                names[i]);
+
+        if(!buffer.contains("DELETE"))
+            out_str.append(buffer + "\n");
+    }
+
+    file.resize(0);
+    stream << out_str;
     file.close();
 }
