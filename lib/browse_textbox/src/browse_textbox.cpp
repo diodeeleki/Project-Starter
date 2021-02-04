@@ -53,3 +53,13 @@ QString BrowseTextbox::text()const
 {
     return this->ui_->lineEdit->text();
 }
+
+void BrowseTextbox::text(const QString& str)
+{
+    return this->ui_->lineEdit->setText(str);
+}
+
+void BrowseTextbox::title(const QString& new_title)
+{
+    this->ui_->groupBox->setTitle(new_title);
+}

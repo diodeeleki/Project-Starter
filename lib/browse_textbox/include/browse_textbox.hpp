@@ -40,6 +40,8 @@ public:
     ~BrowseTextbox();
 
     QString text()const;
+    void text(const QString&);
+    void title(const QString&);
 
 public slots:
     void clicked_browse_button();

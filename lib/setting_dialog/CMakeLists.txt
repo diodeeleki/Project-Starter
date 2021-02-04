@@ -25,7 +25,7 @@ set(CMAKE_AUTOUIC OFF)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/browse_textbox_setting_dialog)
+#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../browse_textbox)
 
 find_package(Qt5 REQUIRED Core)
 find_package(Qt5 REQUIRED Widgets)
@@ -48,6 +48,6 @@ set_property(TARGET setting_dialog PROPERTY CXX_STANDARD 20)
 target_link_libraries(setting_dialog PRIVATE Qt5::Core)
 target_link_libraries(setting_dialog PRIVATE Qt5::Widgets)
 target_link_libraries(setting_dialog PRIVATE Qt5::Sql)
-target_link_libraries(setting_dialog PRIVATE browse_textbox_setting_dialog)
+target_link_libraries(setting_dialog PRIVATE browse_textbox)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)

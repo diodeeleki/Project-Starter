@@ -39,6 +39,8 @@ SettingDialog::SettingDialog(QWidget* parent)
     setting_(this->ini_path_, QSettings::IniFormat)
 {
     this->ui_->setupUi(this);
+    this->ui_->wizard_dir_line_edit->title(this->tr("ウィザードパス"));
+    
     this->setting_.setIniCodec(QTextCodec::codecForName("UTF-8"));
     this->connect(this->ui_->buttonBox, &QDialogButtonBox::rejected, this, &SettingDialog::clocked_rejected);
     this->connect(this->ui_->buttonBox, &QDialogButtonBox::accepted, this, &SettingDialog::clocked_accept);

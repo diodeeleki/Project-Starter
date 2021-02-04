@@ -39,7 +39,7 @@
     </widget>
    </item>
    <item>
-    <widget class="BrowseTextboxSettingDialog" name="wizard_dir_line_edit" native="true"/>
+    <widget class="BrowseTextbox" name="wizard_dir_line_edit" native="true"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -63,9 +63,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>BrowseTextboxSettingDialog</class>
+   <class>BrowseTextbox</class>
    <extends>QWidget</extends>
-   <header location="global">browse_textbox_setting_dialog.hpp</header>
+   <header location="global">browse_textbox.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
