@@ -1,8 +1,0 @@
-/home/diode/Desktop/progress_bar/build/CMakeFiles/rebuild_cache.dir
-/home/diode/Desktop/progress_bar/build/CMakeFiles/edit_cache.dir
-/home/diode/Desktop/progress_bar/build/CMakeFiles/progress_bar.dir
-/home/diode/Desktop/progress_bar/build/CMakeFiles/progress_bar_autogen.dir
-/home/diode/Desktop/progress_bar/build/test/CMakeFiles/edit_cache.dir
-/home/diode/Desktop/progress_bar/build/test/CMakeFiles/rebuild_cache.dir
-/home/diode/Desktop/progress_bar/build/test/CMakeFiles/progress_bar_test.dir
-/home/diode/Desktop/progress_bar/build/test/CMakeFiles/progress_bar_test_autogen.dir

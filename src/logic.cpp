@@ -180,7 +180,9 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
         QFile::copy(in + QDir::separator() + under_files[i], out + QDir::separator() + under_files_replaced[i]);
         this->ui_->progress->add_line(this->tr("create file:") + out + QDir::separator() + under_files_replaced[i]);
         this->ui_->progress->inc_nominator();
-        this->replace_file_text(out + QDir::separator() + under_files_replaced[i], signs, names);
+
+        if(QFile(in + QDir::separator() + under_files[i]).isTextModeEnabled())
+            this->replace_file_text(out + QDir::separator() + under_files_replaced[i], signs, names);
     }
 }
 

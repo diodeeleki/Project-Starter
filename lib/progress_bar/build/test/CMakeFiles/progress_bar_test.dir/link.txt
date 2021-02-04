@@ -1,1 +1,0 @@
-/usr/bin/g++ -g CMakeFiles/progress_bar_test.dir/progress_bar_test_autogen/mocs_compilation.cpp.o CMakeFiles/progress_bar_test.dir/main.cpp.o -o progress_bar_test  ../libprogress_bar.a /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.12.8 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.12.8 /usr/lib/x86_64-linux-gnu/libQt5Sql.so.5.12.8 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.12.8 
