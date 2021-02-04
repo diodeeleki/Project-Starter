@@ -123,7 +123,10 @@ void MainWindow::clicked_prj_list(const QString& prj_name)
 void MainWindow::clicked_setting()
 {
     SettingDialog sdl;
-    sdl.exec();
-    this->ui_->project_name_list->set_wizard_dir(this->setting_.value("wizard_dir", this->default_wizard_path_).toString());
-    this->ui_->replace_view->all_clear();
+    auto result = sdl.exec();
+    if(result)
+    {
+        this->ui_->project_name_list->set_wizard_dir(this->setting_.value("wizard_dir", this->default_wizard_path_).toString());
+        this->ui_->replace_view->all_clear();
+    }
 }
