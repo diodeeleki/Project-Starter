@@ -52,6 +52,9 @@ public:
     {
         return this->selected_before_;
     }
+    
+    // プロジェクトが選択されているか
+    bool is_selected()const;
 
 private slots:
     void select_project(const QModelIndex&);

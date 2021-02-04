@@ -68,3 +68,9 @@ void ProNameList::select_project(const QModelIndex& index)
 
     this->selected_before_ = selected_after_;
 }
+
+bool ProNameList::is_selected()const
+{
+    auto mode = this->ui_->listView->selectionModel()->selectedIndexes();
+    return mode.size() > 0;
+}

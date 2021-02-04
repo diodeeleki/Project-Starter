@@ -38,6 +38,53 @@
 #include <QSettings>
 #include <QTextCodec>
 
+// acceptボタンが押されたとき呼ばれるスロット
+void MainWindow::clicked_accept()
+{
+    if(!this->ui_->project_name_list->is_selected())
+    {
+        QMessageBox msg(this);
+        msg.setText(this->tr("生成するプロジェクトが選択されていません"));
+        msg.setWindowTitle(this->tr("エラー"));
+        msg.exec();
+        return;
+    }
+
+    if(!this->ui_->replace_view->is_names_full())
+    {
+        QMessageBox msg(this);
+        msg.setText(this->tr("置き換え文字リストが全て埋まっていません。"));
+        msg.setWindowTitle(this->tr("エラー"));
+        msg.exec();
+        return;
+    }
+
+    auto signs = this->ui_->replace_view->get_sign_list();// 置換リストの置換目印リスト
+    auto names = this->ui_->replace_view->get_name_list();// 置換リストの置き換え文字リスト
+
+    QDir(this->ui_->out_put_text_box->text()).mkdir(names[0]);
+
+    auto in_dir_path = this->setting_.value("wizard_dir", this->default_wizard_path_).toString() + QDir::separator() + this->ui_->project_name_list->selected_prj_name();
+    auto out_dir_path = this->ui_->out_put_text_box->text() + QDir::separator() + names[0];
+
+    try
+    {
+        this->copy_replace_folder(in_dir_path, out_dir_path, signs, names);
+    }catch(const QString err)
+    {
+        QMessageBox msg(this);
+        msg.setText(err);
+        msg.setWindowTitle(this->tr("エラー"));
+        msg.exec();
+        return;
+    }
+
+    QMessageBox msg(this);
+    msg.setText(this->tr("プロジェクトの生成が完了しました"));
+    msg.setWindowTitle(this->tr("メッセージ"));
+    msg.exec();
+}
+
 // プロジェクトリストが押されたとき呼ばれるスロット
 void MainWindow::clicked_prj_list(const QString& prj_name)
 {
@@ -77,4 +124,6 @@ void MainWindow::clicked_setting()
 {
     SettingDialog sdl;
     sdl.exec();
+    this->ui_->project_name_list->set_wizard_dir(this->setting_.value("wizard_dir", this->default_wizard_path_).toString());
+    this->ui_->replace_view->all_clear();
 }
