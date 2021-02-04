@@ -59,6 +59,15 @@ void MainWindow::clicked_accept()
         return;
     }
 
+    QMessageBox will_do_you(this);
+    will_do_you.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    will_do_you.setText(this->tr("プロジェクトの作成を行いますか?"));
+    will_do_you.setWindowTitle(this->tr("メッセージ"));
+    if(will_do_you.exec() == QMessageBox::No)
+        return;
+
+    qDebug() << will_do_you.exec();
+
     auto signs = this->ui_->replace_view->get_sign_list();// 置換リストの置換目印リスト
     auto names = this->ui_->replace_view->get_name_list();// 置換リストの置き換え文字リスト
 
