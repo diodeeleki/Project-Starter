@@ -56,6 +56,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->connect(this->ui_->action_setting, &QAction::triggered, this, &MainWindow::clicked_setting);
 
     this->ui_->project_name_list->set_wizard_dir(this->setting_.value("wizard_dir", this->default_wizard_path_).toString());
+
+    this->load_text_extensions_file("../etc/text_type_extensions.txt");
 }
 
 MainWindow::~MainWindow()

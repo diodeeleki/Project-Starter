@@ -1,0 +1,10 @@
+txt
+c
+h
+cpp
+hpp
+ui
+user
+md
+pro
+qrc

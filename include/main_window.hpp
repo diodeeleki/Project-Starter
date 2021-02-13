@@ -22,6 +22,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QSettings>
+#include <QStringList>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -41,6 +42,7 @@ class MainWindow
     const QString default_replace_sign_head_;
     const QString default_replace_sign_end_;
     const QString default_wizard_path_;
+    QStringList textfile_extensions_;
 
     QSettings setting_;
 public:
@@ -62,6 +64,9 @@ private:
 
     // ファイル内のテキストを置換
     void replace_file_text(const QString&, const QStringList&, const QStringList&)const noexcept(false);
+
+    // テキストファイルと認識される拡張子リストの読み込み
+    void load_text_extensions_file(const QString& filename);
 
 private slots:
     // acceptボタンが押されたとき呼ばれるスロット

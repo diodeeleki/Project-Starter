@@ -189,7 +189,14 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
 // ファイル内のテキストを置換
 void MainWindow::replace_file_text(const QString& path, const QStringList& signs, const QStringList& names)const
 {
+    QFileInfo fi;
+    fi.setFile(path);
+
     auto file = QFile(path);
+    auto extension = fi.suffix();
+    int find = this->textfile_extensions_.indexOf(extension);
+    if(find == -1)
+        return;
 
     if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
@@ -218,5 +225,28 @@ void MainWindow::replace_file_text(const QString& path, const QStringList& signs
 
     file.resize(0);
     stream << out_str;
+    file.close();
+}
+
+// テキストファイルと認識される拡張子リストの読み込み
+void MainWindow::load_text_extensions_file(const QString& filename)
+{
+    auto file = QFile(filename);
+
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        file.close();
+        return;
+    }
+
+    auto stream = QTextStream(&file);
+    auto buffer = QString();
+
+    while(!stream.atEnd())
+    {
+        buffer = stream.readLine();
+        this->textfile_extensions_ += buffer;
+    }
+
     file.close();
 }
