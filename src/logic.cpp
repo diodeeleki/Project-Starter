@@ -194,9 +194,13 @@ void MainWindow::replace_file_text(const QString& path, const QStringList& signs
 
     auto file = QFile(path);
     auto extension = fi.suffix();
-    int find = this->textfile_extensions_.indexOf(extension);
-    if(find == -1)
-        return;
+
+    bool hit = false;
+    for(const auto& exe:this->textfile_extensions_)
+        if(exe == extension) hit = true;
+
+    if(!hit)
+           return;
 
     if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
