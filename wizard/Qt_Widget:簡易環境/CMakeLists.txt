@@ -28,7 +28,13 @@ find_package(Qt5 REQUIRED Core)
 find_package(Qt5 REQUIRED Widgets)
 find_package(Qt5 REQUIRED Sql)
 
-add_executable(__$project_name$__ ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+# リソース管理ファイル
+QT5_ADD_RESOURCES(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/rsc/rsc.qrc)
+
+add_executable(__$project_name$__ 
+	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+	${RESOURCES}
+)
 
 set_property(TARGET __$project_name$__ PROPERTY CXX_STANDARD 20)
 target_link_libraries(__$project_name$__ PRIVATE Qt5::Core)

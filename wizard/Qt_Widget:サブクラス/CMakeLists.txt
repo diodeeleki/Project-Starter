@@ -30,9 +30,13 @@ find_package(Qt5 REQUIRED Core)
 find_package(Qt5 REQUIRED Widgets)
 find_package(Qt5 REQUIRED Sql)
 
+# リソース管理ファイル
+QT5_ADD_RESOURCES(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/rsc/rsc.qrc)
+
 add_library(__$project_name$__ STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/__$project_name$__.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/__$project_name$__.hpp
+    ${RESOURCES}
 )
 
 target_include_directories(__$project_name$__ PUBLIC 

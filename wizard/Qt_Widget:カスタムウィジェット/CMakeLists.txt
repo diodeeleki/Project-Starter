@@ -33,10 +33,14 @@ find_package(Qt5 REQUIRED Sql)
 # AUTOUICを使わずuiファイルのパスを手動でUICへ指定
 qt5_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/__$project_name$__.ui)
 
+# リソース管理ファイル
+QT5_ADD_RESOURCES(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/rsc/rsc.qrc)
+
 add_library(__$project_name$__ STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/__$project_name$__.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/__$project_name$__.hpp
     ${UI_HEADERS}
+    ${RESOURCES}
 )
 
 target_include_directories(__$project_name$__ PUBLIC 

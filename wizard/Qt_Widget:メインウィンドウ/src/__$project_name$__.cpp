@@ -27,6 +27,7 @@ __$class_name$__::__$class_name$__(QWidget *parent)
 	ui_(new Ui::__$ui_name$__)
 {
     this->ui_->setupUi(this);
+    this->setWindowIcon(QIcon(":/img/icon.png"));
 }
 
 __$class_name$__::~__$class_name$__()
