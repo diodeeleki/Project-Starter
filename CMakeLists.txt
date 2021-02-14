@@ -39,6 +39,9 @@ find_package(Qt5 REQUIRED Sql)
 # AUTOUICを使わずuiファイルのパスを手動でUICへ指定
 qt5_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/main_window.ui)
 
+# リソース管理ファイル
+QT5_ADD_RESOURCES(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/etc/etc.qrc)
+
 add_executable(main_window
 	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/special.cpp
@@ -46,6 +49,7 @@ add_executable(main_window
     ${CMAKE_CURRENT_SOURCE_DIR}/src/slots.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/include/main_window.hpp
     ${UI_HEADERS}
+    ${RESOURCES}
 )
 
 target_include_directories(main_window PUBLIC 

@@ -181,26 +181,23 @@ void MainWindow::copy_replace_folder(const QString& in, const QString& out, cons
         this->ui_->progress->add_line(this->tr("create file:") + out + QDir::separator() + under_files_replaced[i]);
         this->ui_->progress->inc_nominator();
 
-        // バイナリの場合この1行を実行させてはいけない
-        this->replace_file_text(out + QDir::separator() + under_files_replaced[i], signs, names);
+        QFileInfo fi;
+        fi.setFile(out + QDir::separator() + under_files_replaced[i]);
+        auto extension = fi.suffix();
+
+        bool hit = false;
+        for(const auto& exe:this->textfile_extensions_)
+            if(exe == extension) hit = true;
+
+        if(hit)
+            this->replace_file_text(out + QDir::separator() + under_files_replaced[i], signs, names);
     }
 }
 
 // ファイル内のテキストを置換
 void MainWindow::replace_file_text(const QString& path, const QStringList& signs, const QStringList& names)const
 {
-    QFileInfo fi;
-    fi.setFile(path);
-
     auto file = QFile(path);
-    auto extension = fi.suffix();
-
-    bool hit = false;
-    for(const auto& exe:this->textfile_extensions_)
-        if(exe == extension) hit = true;
-
-    if(!hit)
-           return;
 
     if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
