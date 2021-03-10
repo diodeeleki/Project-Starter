@@ -35,7 +35,6 @@
 #include <QDir>
 #include <QApplication>
 #include <QSettings>
-#include <QTextCodec>
 
 MainWindow::MainWindow(QWidget *parent)
 :	QMainWindow(parent), 
@@ -46,7 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
     default_wizard_path_(QApplication::applicationDirPath() + QDir::separator() + ".." + QDir::separator() + "wizard"),
     setting_(this->init_file_path_, QSettings::IniFormat)
 {
-    this->setting_.setIniCodec(QTextCodec::codecForName("UTF-8"));
 
     this->ui_->setupUi(this);
 

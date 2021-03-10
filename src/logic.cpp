@@ -35,7 +35,6 @@
 #include <QDir>
 #include <QApplication>
 #include <QSettings>
-#include <QTextCodec>
 
 // ある文字列で囲まれた文字列抽出
 QStringList MainWindow::search_inside(const QString& str, const QString& start, const QString& end)const

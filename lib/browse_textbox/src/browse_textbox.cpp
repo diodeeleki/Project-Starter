@@ -41,7 +41,7 @@ BrowseTextbox::~BrowseTextbox()
 void BrowseTextbox::clicked_browse_button()
 {
 	QFileDialog dialog;
-	dialog.setFileMode(QFileDialog::DirectoryOnly);
+    dialog.setFileMode(QFileDialog::Directory);
 	dialog.setDirectory(this->ui_->lineEdit->text());
 	dialog.exec();
 	

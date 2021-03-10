@@ -26,21 +26,23 @@ set(CMAKE_AUTOUIC OFF)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+set(CMAKE_PREFIX_PATH $ENV{HOME}/Qt/6.0.2/gcc_64)
+
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/browse_textbox)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/pro_name_list)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/relpace_view)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/setting_dialog)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/progress_bar)
 
-find_package(Qt5 REQUIRED Core)
-find_package(Qt5 REQUIRED Widgets)
-find_package(Qt5 REQUIRED Sql)
+find_package(Qt6 REQUIRED Core)
+find_package(Qt6 REQUIRED Widgets)
+find_package(Qt6 REQUIRED Sql)
 
 # AUTOUICを使わずuiファイルのパスを手動でUICへ指定
-qt5_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/main_window.ui)
+qt_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/main_window.ui)
 
 # リソース管理ファイル
-QT5_ADD_RESOURCES(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/etc/etc.qrc)
+QT_ADD_RESOURCES(RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/etc/etc.qrc)
 
 add_executable(main_window
 	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
@@ -57,9 +59,9 @@ target_include_directories(main_window PUBLIC
 )
 
 set_property(TARGET main_window PROPERTY CXX_STANDARD 20)
-target_link_libraries(main_window PRIVATE Qt5::Core)
-target_link_libraries(main_window PRIVATE Qt5::Widgets)
-target_link_libraries(main_window PRIVATE Qt5::Sql)
+target_link_libraries(main_window PRIVATE Qt6::Core)
+target_link_libraries(main_window PRIVATE Qt6::Widgets)
+target_link_libraries(main_window PRIVATE Qt6::Sql)
 
 target_link_libraries(main_window PRIVATE browse_textbox)
 target_link_libraries(main_window PRIVATE pro_name_list)

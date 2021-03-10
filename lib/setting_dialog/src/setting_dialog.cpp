@@ -28,7 +28,6 @@
 #include <QDir>
 #include <QApplication>
 #include <QSettings>
-#include <QTextCodec>
 #include <QMessageBox>
 
 SettingDialog::SettingDialog(QWidget* parent)
@@ -41,7 +40,6 @@ SettingDialog::SettingDialog(QWidget* parent)
     this->ui_->setupUi(this);
     this->ui_->wizard_dir_line_edit->title(this->tr("ウィザードパス"));
     
-    this->setting_.setIniCodec(QTextCodec::codecForName("UTF-8"));
     this->connect(this->ui_->buttonBox, &QDialogButtonBox::rejected, this, &SettingDialog::clocked_rejected);
     this->connect(this->ui_->buttonBox, &QDialogButtonBox::accepted, this, &SettingDialog::clocked_accept);
     this->connect(this->ui_->default_button, &QPushButton::clicked, this, &SettingDialog::clicked_default);

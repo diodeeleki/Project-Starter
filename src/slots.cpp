@@ -36,7 +36,6 @@
 #include <QDir>
 #include <QApplication>
 #include <QSettings>
-#include <QTextCodec>
 
 // acceptボタンが押されたとき呼ばれるスロット
 void MainWindow::clicked_accept()

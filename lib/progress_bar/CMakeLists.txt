@@ -26,12 +26,12 @@ set(CMAKE_AUTOUIC OFF)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 REQUIRED Core)
-find_package(Qt5 REQUIRED Widgets)
-find_package(Qt5 REQUIRED Sql)
+find_package(Qt6 REQUIRED Core)
+find_package(Qt6 REQUIRED Widgets)
+find_package(Qt6 REQUIRED Sql)
 
 # AUTOUICを使わずuiファイルのパスを手動でUICへ指定
-qt5_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/progress_bar.ui)
+qt_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/progress_bar.ui)
 
 add_library(progress_bar STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/progress_bar.cpp
@@ -44,8 +44,8 @@ target_include_directories(progress_bar PUBLIC
 )
 
 set_property(TARGET progress_bar PROPERTY CXX_STANDARD 20)
-target_link_libraries(progress_bar PRIVATE Qt5::Core)
-target_link_libraries(progress_bar PRIVATE Qt5::Widgets)
-target_link_libraries(progress_bar PRIVATE Qt5::Sql)
+target_link_libraries(progress_bar PRIVATE Qt6::Core)
+target_link_libraries(progress_bar PRIVATE Qt6::Widgets)
+target_link_libraries(progress_bar PRIVATE Qt6::Sql)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)

@@ -27,12 +27,12 @@ set(CMAKE_AUTORCC ON)
 
 #add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../browse_textbox)
 
-find_package(Qt5 REQUIRED Core)
-find_package(Qt5 REQUIRED Widgets)
-find_package(Qt5 REQUIRED Sql)
+find_package(Qt6 REQUIRED Core)
+find_package(Qt6 REQUIRED Widgets)
+find_package(Qt6 REQUIRED Sql)
 
 # AUTOUICを使わずuiファイルのパスを手動でUICへ指定
-qt5_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/setting_dialog.ui)
+qt_wrap_ui(UI_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/ui/setting_dialog.ui)
 
 add_library(setting_dialog STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/setting_dialog.cpp
@@ -45,9 +45,9 @@ target_include_directories(setting_dialog PUBLIC
 )
 
 set_property(TARGET setting_dialog PROPERTY CXX_STANDARD 20)
-target_link_libraries(setting_dialog PRIVATE Qt5::Core)
-target_link_libraries(setting_dialog PRIVATE Qt5::Widgets)
-target_link_libraries(setting_dialog PRIVATE Qt5::Sql)
+target_link_libraries(setting_dialog PRIVATE Qt6::Core)
+target_link_libraries(setting_dialog PRIVATE Qt6::Widgets)
+target_link_libraries(setting_dialog PRIVATE Qt6::Sql)
 target_link_libraries(setting_dialog PRIVATE browse_textbox)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)

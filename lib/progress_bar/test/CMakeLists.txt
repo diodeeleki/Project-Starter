@@ -20,14 +20,14 @@
 cmake_minimum_required(VERSION 3.19.1)
 project(progress_bar_test CXX)
 
-find_package(Qt5 REQUIRED Core)
-find_package(Qt5 REQUIRED Widgets)
-find_package(Qt5 REQUIRED Sql)
+find_package(Qt6 REQUIRED Core)
+find_package(Qt6 REQUIRED Widgets)
+find_package(Qt6 REQUIRED Sql)
 
 add_executable(progress_bar_test ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
 set_property(TARGET progress_bar_test PROPERTY CXX_STANDARD 20)
-target_link_libraries(progress_bar_test PRIVATE Qt5::Core)
-target_link_libraries(progress_bar_test PRIVATE Qt5::Widgets)
-target_link_libraries(progress_bar_test PRIVATE Qt5::Sql)
+target_link_libraries(progress_bar_test PRIVATE Qt6::Core)
+target_link_libraries(progress_bar_test PRIVATE Qt6::Widgets)
+target_link_libraries(progress_bar_test PRIVATE Qt6::Sql)
 target_link_libraries(progress_bar_test PRIVATE progress_bar)
