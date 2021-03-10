@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------
 
-	Copyright © __<year>__, __<auther>__
+	Copyright © __$year$__, __$auther$__
 	
 	This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,9 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 *///------------------------------------------------------------------------
-
 #include <__$project_name$__.hpp>
-
 #include <QApplication>
 
 int main(int argc, char *argv[])

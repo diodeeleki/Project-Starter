@@ -16,25 +16,24 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 *///------------------------------------------------------------------------
-
 #pragma once
 
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui
+namespace Ui 
 { 
-	class __$ui_name$__; 
+    class __$ui_name$__; 
 }
 QT_END_NAMESPACE
 
 class __$class_name$__
-: public QMainWindow
+:   public QMainWindow
 {
     Q_OBJECT
 
-	Ui::__$ui_name$__* ui_;
+    Ui::__$ui_name$__* ui_;
 public:
-    __$class_name$__(QWidget* = nullptr);
+    explicit __$class_name$__(QWidget* parent = nullptr);
     ~__$class_name$__();
 };

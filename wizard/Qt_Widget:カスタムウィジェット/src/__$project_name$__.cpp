@@ -16,13 +16,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 *///------------------------------------------------------------------------
-
 #include <__$project_name$__.hpp>
 #include <ui___$project_name$__.h>
 
 #include <QWidget>
 
-__$class_name$__::__$class_name$__(QWidget *parent)
+__$class_name$__::__$class_name$__(QWidget* parent)
 :	QWidget(parent), 
 	ui_(new Ui::__$ui_name$__)
 {

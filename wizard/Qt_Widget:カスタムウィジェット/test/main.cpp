@@ -17,7 +17,6 @@
 
 *///------------------------------------------------------------------------
 #include <__$project_name$__.hpp>
-
 #include <QApplication>
 
 int main(int argc, char *argv[])

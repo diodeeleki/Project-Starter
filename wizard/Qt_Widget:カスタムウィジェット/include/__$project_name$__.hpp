@@ -16,7 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 *///------------------------------------------------------------------------
-
 #pragma once
 
 #include <QWidget>
@@ -35,6 +34,6 @@ class __$class_name$__
 
 	Ui::__$ui_name$__* ui_;
 public:
-    __$class_name$__(QWidget* = nullptr);
+    explicit __$class_name$__(QWidget* parent = nullptr);
     ~__$class_name$__();
 };

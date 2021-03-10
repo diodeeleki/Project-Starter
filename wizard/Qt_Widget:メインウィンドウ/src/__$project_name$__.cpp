@@ -16,22 +16,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 *///------------------------------------------------------------------------
-
 #include <__$project_name$__.hpp>
 #include <ui___$project_name$__.h>
+#include <QIcon>
 
-#include <QMainWindow>
-
-__$class_name$__::__$class_name$__(QWidget *parent)
-:	QMainWindow(parent), 
-	ui_(new Ui::__$ui_name$__)
+__$class_name$__::__$class_name$__(QWidget* parent)
+:   QMainWindow(parent),
+    ui_(new Ui::__$ui_name$__)
 {
-    this->ui_->setupUi(this);
+    ui_->setupUi(this);
     this->setWindowIcon(QIcon(":/img/icon.png"));
 }
 
 __$class_name$__::~__$class_name$__()
 {
-    delete this->ui_;
+    delete ui_;
 }
 
